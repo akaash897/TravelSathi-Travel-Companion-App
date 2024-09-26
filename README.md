@@ -20,8 +20,8 @@ This is a web application built using **Flask**, a lightweight WSGI web framewor
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
-   cd <repository-folder>
+   git clone https://github.com/akaash897/TravelSathi-Travel-Companion-App.git
+   cd TravelSathi-Travel-Companion-App
    ```
 
 2. Create a virtual environment (optional but recommended):
