@@ -8,7 +8,16 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route('/')
 @app.route('/home')
 def home():
-    rides = Ride.query.all()
+    if current_user.is_authenticated:
+        # Filter rides based on gender preference
+        if current_user.gender == 'male':
+            rides = Ride.query.filter((Ride.gender_preference == 'male') | (Ride.gender_preference == 'co-ed')).all()
+        elif current_user.gender == 'female':
+            rides = Ride.query.filter((Ride.gender_preference == 'female') | (Ride.gender_preference == 'co-ed')).all()
+    else:
+        # If the user is not authenticated, only show co-ed rides (for guests)
+        rides = Ride.query.filter_by(gender_preference='co-ed').all()
+
     return render_template('index.html', rides=rides)
 
 # User Registration
@@ -53,17 +62,25 @@ def new_ride():
         return redirect(url_for('home'))
     return render_template('create_ride.html', form=form)
 
-# Join a Ride
 @app.route('/ride/join/<int:ride_id>')
 @login_required
 def join_ride(ride_id):
     ride = Ride.query.get_or_404(ride_id)
+
+    # Check if the gender preference of the ride matches the user's gender
+    if ride.gender_preference == 'male' and current_user.gender != 'male':
+        flash('This ride is male-only. You cannot join.', 'danger')
+        return redirect(url_for('home'))
+    elif ride.gender_preference == 'female' and current_user.gender != 'female':
+        flash('This ride is female-only. You cannot join.', 'danger')
+        return redirect(url_for('home'))
 
     # Check if the user is already a passenger in the ride
     if current_user in ride.passengers:
         flash('You have already joined this ride!', 'warning')
         return redirect(url_for('home'))
 
+    # Check if there are available seats
     if ride.available_seats > 0:
         ride.passengers.append(current_user)  # Add the current user to the passengers
         ride.available_seats -= 1  # Decrease available seats

@@ -40,6 +40,7 @@
                 <th>Departure Time</th>
                 <th>Seats Available</th>
                 <th>Cost per Head</th>
+                <th>Gender Preference</th>  <!-- Add this column -->
                 <th>Action</th>
             </tr>
             {% for ride in rides %}
@@ -49,11 +50,11 @@
                 <td>{{ ride.departure_time }}</td>
                 <td>{{ ride.available_seats }}</td>
                 <td>{{ ride.cost_per_head }}</td>
+                <td>{{ ride.gender_preference|capitalize }}</td>  <!-- Display the gender preference -->
                 <td><a href="{{ url_for('join_ride', ride_id=ride.id) }}">Join Ride</a></td>
             </tr>
             {% endfor %}
         </table>
-    </div>
 
     <!-- Link to JavaScript -->
     <script src="{{ url_for('static', filename='scripts.js') }}"></script>
