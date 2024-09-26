@@ -58,13 +58,20 @@ def new_ride():
 @login_required
 def join_ride(ride_id):
     ride = Ride.query.get_or_404(ride_id)
+
+    # Check if the user is already a passenger in the ride
+    if current_user in ride.passengers:
+        flash('You have already joined this ride!', 'warning')
+        return redirect(url_for('home'))
+
     if ride.available_seats > 0:
-        ride.passengers.append(current_user)  # This should now work correctly
-        ride.available_seats -= 1
-        db.session.commit()
+        ride.passengers.append(current_user)  # Add the current user to the passengers
+        ride.available_seats -= 1  # Decrease available seats
+        db.session.commit()  # Commit the changes to the database
         flash('You have successfully joined the ride!', 'success')
     else:
         flash('No seats available for this ride.', 'danger')
+
     return redirect(url_for('home'))
 
 
