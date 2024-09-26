@@ -1,0 +1,31 @@
+<!-- templates/register.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Register</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <label for="name">{{ form.name.label }}</label>
+            {{ form.name() }}
+            <label for="email">{{ form.email.label }}</label>
+            {{ form.email() }}
+            <label for="password">{{ form.password.label }}</label>
+            {{ form.password() }}
+            <label for="confirm_password">{{ form.confirm_password.label }}</label>
+            {{ form.confirm_password() }}
+            <label for="gender">{{ form.gender.label }}</label>
+            {{ form.gender() }}
+            {{ form.submit() }}
+        </form>
+        <a href="{{ url_for('login') }}">Already have an account? Login</a>
+    </div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>

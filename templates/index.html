@@ -1,0 +1,50 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shared Ride Platform</title>
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Shared Ride Platform</h1>
+
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('new_ride') }}" class="btn">Post a Ride</a>
+            <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}" class="btn">Login</a>
+            <a href="{{ url_for('register') }}" class="btn">Register</a>
+        {% endif %}
+
+        <h2>Available Rides</h2>
+
+        <table>
+            <tr>
+                <th>Start Location</th>
+                <th>End Location</th>
+                <th>Departure Time</th>
+                <th>Seats Available</th>
+                <th>Cost per Head</th>
+                <th>Action</th>
+            </tr>
+            {% for ride in rides %}
+            <tr>
+                <td>{{ ride.start_location }}</td>
+                <td>{{ ride.end_location }}</td>
+                <td>{{ ride.departure_time }}</td>
+                <td>{{ ride.available_seats }}</td>
+                <td>{{ ride.cost_per_head }}</td>
+                <td><a href="{{ url_for('join_ride', ride_id=ride.id) }}">Join Ride</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- Link to JavaScript -->
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>

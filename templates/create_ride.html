@@ -1,0 +1,35 @@
+<!-- templates/create_ride.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Ride</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Create a New Ride</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <label for="start_location">{{ form.start_location.label }}</label>
+            {{ form.start_location() }}
+            <label for="end_location">{{ form.end_location.label }}</label>
+            {{ form.end_location() }}
+            <label for="meetup_point">{{ form.meetup_point.label }}</label>
+            {{ form.meetup_point() }}
+            <label for="departure_time">{{ form.departure_time.label }}</label>
+            {{ form.departure_time() }}
+            <label for="available_seats">{{ form.available_seats.label }}</label>
+            {{ form.available_seats() }}
+            <label for="cost_per_head">{{ form.cost_per_head.label }}</label>
+            {{ form.cost_per_head() }}
+            <label for="gender_preference">{{ form.gender_preference.label }}</label>
+            {{ form.gender_preference() }}
+            {{ form.submit() }}
+        </form>
+        <a href="{{ url_for('home') }}">Back to Home</a>
+    </div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
