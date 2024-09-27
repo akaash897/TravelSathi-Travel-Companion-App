@@ -3,28 +3,49 @@
 {% block head %}
 <title>Your Rides</title>
 {% endblock %}
+
 {% block body %}
-    <div class="container mt-4">
-        <h2>Your Upcoming Joined Rides</h2>
-        
-        <!-- Display joined rides -->
-        {% if joined_rides and joined_rides|length > 0 %}
-            <div class="list-group">
-                {% for ride in joined_rides %}
-                    <a href="#" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">{{ ride.start_location }} to {{ ride.end_location }}</h5>
-                            <small>Departure: {{ ride.departure_time }}</small>
-                        </div>
-                        <p class="mb-1">Meetup at: {{ ride.meetup_point }}</p>
-                        <small>Cost per head: ₹{{ ride.cost_per_head }}</small>
-                    </a>
-                {% endfor %}
-            </div>
-        {% else %}
-            <p class="text-muted">You have not joined any upcoming rides.</p>
+<div class="container mt-4">
+    <h2>Your Upcoming Rides</h2>
+
+    <!-- Display flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flashes">
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
         {% endif %}
-    </div>
+    {% endwith %}
+
+    <!-- Display joined rides -->
+    {% if joined_rides and joined_rides|length > 0 %}
+        <div class="list-group">
+            {% for ride in joined_rides %}
+                <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ ride.start_location }} to {{ ride.end_location }}</h5>
+                        <small>Departure: {{ ride.departure_time }}</small>
+                    </div>
+                    <p class="mb-1">Meetup at: {{ ride.meetup_point }}</p>
+                    <small>Cost per head: ₹{{ ride.cost_per_head }}</small>
+                    
+                    <div class="mt-2">
+                        <form action="{{ url_for('opt_out', ride_id=ride.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-warning btn-sm">Opt Out</button>
+                        </form>
+                        {% if ride.author_id == current_user.id %}
+                        <form action="{{ url_for('delete_ride', ride_id=ride.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">You have not joined any upcoming rides.</p>
+    {% endif %}
+</div>
 {% endblock %}
-
-

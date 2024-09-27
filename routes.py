@@ -151,6 +151,27 @@ def about():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
-# @app.route('path')
-# def func_name(foo):
-#     return render_template('expression')
+
+@app.route('/delete_ride/<int:ride_id>', methods=['POST'])
+@login_required
+def delete_ride(ride_id):
+    ride = Ride.query.get_or_404(ride_id)
+    if ride.author_id == current_user.id:
+        db.session.delete(ride)
+        db.session.commit()
+        flash('Ride deleted successfully.', 'success')
+    else:
+        flash('You do not have permission to delete this ride.', 'danger')
+    return redirect(url_for('joined_rides'))
+
+@app.route('/opt_out/<int:ride_id>', methods=['POST'])
+@login_required
+def opt_out(ride_id):
+    ride = Ride.query.get_or_404(ride_id)
+    if ride in current_user.rides_joined:
+        current_user.rides_joined.remove(ride)
+        db.session.commit()
+        flash('You have opted out of the ride.', 'success')
+    else:
+        flash('You are not joined to this ride.', 'danger')
+    return redirect(url_for('joined_rides'))
