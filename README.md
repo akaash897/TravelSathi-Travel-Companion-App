@@ -1,7 +1,24 @@
 
 # SDE Project - TravelSathi 
 
-This is a web application built using **Flask**, a lightweight WSGI web framework in Python.
+## Abstract
+The project aims to create a secure online platform that facilitates shared transportation for college students, starting with autorickshaw rides between key locations like IIT Jodhpur and Jodhpur Junction. Users can post when they are looking for companions for a ride, and others can search for available rides to join. To ensure privacy and safety, the platform offers gender-specific pairing options—female users can choose to travel with female partners only, and the same applies to male users, with an additional co-ed option available. No personal details are shared among users. The platform will also include a database of trusted autorickshaw drivers operating within the IITJ campus. Future plans involve expanding the service to other nearby institutions like NIFT and incorporating a broader range of transportation options.
+
+## Evaluation rubrics
+- [ ] Pick two or more architectural pattern, implement and compare them critically.
+
+- [ ] Compare the effect of containerisation and virtualisation by generating experimental results from the system implemented by you. 
+
+- [ ] Implement any cloud computing related aspect and show the performance improvement over non-cloud setup by generating experimental results from the system implemented by you. 
+
+Submission Artefacts: 
+1. Design document 
+2. Source code repository
+3. [Readme file](README.md) 
+4. Code documentation 
+5. Presentation slides
+6. Recorded demo
+7. Recorded presentation (optional)
 
 ## Technologies Used
 
@@ -10,6 +27,8 @@ This is a web application built using **Flask**, a lightweight WSGI web framewor
 - **HTML/CSS**: For the frontend structure and styling.
 
 ## Setup and Installation
+
+This is a web application built using **Flask**, a lightweight WSGI web framework in Python.
 
 ### Prerequisites
 
