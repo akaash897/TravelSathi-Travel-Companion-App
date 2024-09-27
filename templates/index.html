@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('joined_rides') }}">Joined Rides</a>
+      </li>
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
         <div class="flash-messages">

@@ -91,6 +91,17 @@ def join_ride(ride_id):
 
     return redirect(url_for('home'))
 
+@app.route('/joined_rides')
+@login_required
+def joined_rides():
+    # Fetch rides that the user has joined
+    joined_rides = current_user.rides_joined
+    
+    # Debugging: print joined rides to console
+    for ride in joined_rides:
+        print(f"Joined Ride: {ride.start_location} -> {ride.end_location} at {ride.departure_time}")
+
+    return render_template('joined_rides.html', joined_rides=joined_rides)
 
 # routes.py
 @app.route('/logout')
