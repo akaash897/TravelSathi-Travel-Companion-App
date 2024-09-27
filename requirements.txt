@@ -1,6 +1,14 @@
-flask
-flask-sqlalchemy
-flask-login
-flask-bcrypt
-flask-wtf
-WTForms
+Flask==3.0.3
+Flask_Bcrypt==1.0.1
+Flask_Cors==5.0.0
+Flask_Login==0.6.3
+flask_sqlalchemy==3.1.1
+flask_wtf==1.2.1
+WTForms==3.1.2
+
+# flask
+# flask-sqlalchemy
+# flask-login
+# flask-bcrypt
+# flask-wtf
+# WTForms
