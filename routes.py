@@ -3,8 +3,20 @@ from flask import render_template, redirect, url_for, flash, request, make_respo
 from app import app, db, bcrypt
 from models import User, Ride
 from forms import RegistrationForm, LoginForm, RideForm
-from flask_login import login_user, current_user, logout_user, login_required
+from flask_login import login_user, current_user, logout_user, login_required, LoginManager
 from functools import wraps
+from urllib.parse import urlparse, urljoin
+
+# Initialize LoginManager
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+# Set the login view route
+login_manager.login_view = 'login' 
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id)) 
 
 def nocache(view):
     @wraps(view)  # This preserves the original function name and metadata
@@ -56,7 +68,14 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
-            return redirect(url_for('home'))
+            
+            # Check for the 'next' parameter in the query string
+            next_page = request.args.get('next')
+            # Ensure the next_page is a valid URL and not a redirect attack
+            if next_page and urlparse(next_page).netloc == '':
+                return redirect(next_page)
+            else:
+                return redirect(url_for('home'))
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', form=form)
