@@ -125,7 +125,13 @@ def joined_rides():
 def logout():
     logout_user()
     return redirect(url_for('home'))
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 # @app.route('path')
 # def func_name(foo):
 #     return render_template('expression')
