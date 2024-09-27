@@ -1,12 +1,24 @@
 # routes.py
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, make_response
 from app import app, db, bcrypt
 from models import User, Ride
 from forms import RegistrationForm, LoginForm, RideForm
 from flask_login import login_user, current_user, logout_user, login_required
+from functools import wraps
+
+def nocache(view):
+    @wraps(view)  # This preserves the original function name and metadata
+    def no_cache(*args, **kwargs):
+        response = make_response(view(*args, **kwargs))
+        response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '0'
+        return response
+    return no_cache
 
 @app.route('/')
 @app.route('/home')
+@nocache
 def home():
     if current_user.is_authenticated:
         # Filter rides based on gender preference
@@ -35,7 +47,10 @@ def register():
 
 # User Login
 @app.route('/login', methods=['GET', 'POST'])
+@nocache
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -105,6 +120,7 @@ def joined_rides():
 
 # routes.py
 @app.route('/logout')
+@nocache
 @login_required
 def logout():
     logout_user()
