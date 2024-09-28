@@ -3,6 +3,66 @@
 
 {% block head %}
 <title>Travel Sathi - Shared Ride Platform - Home</title>
+<style>
+    /* Navbar styles */
+    .navbar {
+        background-color: #343a40; /* Darker color */
+    }
+    
+    .navbar .nav-link {
+        color: white; /* White text */
+    }
+
+    .navbar .nav-link:hover {
+        color: #ffc107; /* Yellow on hover */
+    }
+
+    /* Center text for headers */
+    h2 {
+        text-align: center;
+        font-family: 'Comic Sans MS', cursive, sans-serif; /* Funky font */
+    }
+
+    /* Button styles */
+    .btn {
+        font-size: 1.2rem; /* Larger font size */
+        padding: 15px 30px; /* Increased padding */
+        margin: 10px; /* Space between buttons */
+        border-radius: 5px; /* Rounded corners */
+        color: white; /* Ensure button text is white */
+    }
+
+    /* Custom colors for buttons */
+    .btn-primary {
+        background-color: #191d21;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #898f96;
+    }
+
+    .btn-success {
+        background-color: #0b0f0c;
+        border: none;
+    }
+
+    .btn-success:hover {
+        background-color: #9c9f9d;
+    }
+
+    .btn-warning {
+        background-color: #010101;
+        border: none;
+        color: white; /* Set text color to white for Create a Ride */
+    }
+
+    .btn-warning:hover {
+        background-color: #979388;
+    }
+
+
+</style>
 {% endblock %}
 
 {% block body %}
@@ -10,7 +70,7 @@
 {% if messages %}
 <div class="flash-messages">
     {% for category, message in messages %}
-    <div class="alert alert-{{ category }}">
+    <div class="alert alert-{{ category }} text-center">
         {{ message }}
     </div>
     {% endfor %}
@@ -23,13 +83,13 @@
 
     {% if current_user.is_authenticated %}
         <h2>Dashboard</h2>
-        <div class="btn-group">
+        <div class="btn-group d-flex justify-content-center">
             <a href="{{ url_for('joined_rides') }}" class="btn btn-primary">Show My Rides</a>
             <a href="{{ url_for('search_rides') }}" class="btn btn-success">Search Rides</a>
             <a href="{{ url_for('new_ride') }}" class="btn btn-warning">Create a Ride</a>
         </div>
     {% else %}
-        <p>Please <a href="{{ url_for('login') }}">login</a> or <a href="{{ url_for('register') }}">register</a>.</p>
+        <p class="text-center">Please <a href="{{ url_for('login') }}">login</a> or <a href="{{ url_for('register') }}">register</a>.</p>
     {% endif %}
 </div>
 {% endblock %}

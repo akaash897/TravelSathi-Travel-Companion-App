@@ -4,12 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Fredoka', cursive;
+            background-color: #f4f4f4;
+            text-align: center; /* Centering all text */
+            min-height: 100vh; /* Full viewport height */
+            display: flex;
+            flex-direction: column; /* Enable flexbox */
+        }
+        .navbar {
+            background-color: #343a40; /* Darker navbar */
+            border-radius: 10px; /* Rounded edges */
+            padding: 10px 20px; /* Space around the navbar */
+            margin-bottom: 20px;
+            margin-top: 20px;
+            margin-left: 5px;
+            margin-right: 5px; /* Space below the navbar */
+        }
+        .navbar-brand, .nav-link {
+            color: white !important; /* White text for navbar links */
+        }
+        .navbar-nav .nav-link:hover {
+            color: #f8f9fa !important; /* Slightly lighter on hover */
+        }
+        .footer {
+            background-color: #343a40; /* Same dark color for footer */
+            color: white; /* White text in footer */
+            padding: 10px 0;
+            margin-top: auto; /* Pushes the footer to the bottom */
+        }
+    </style>
     {% block head %}{% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <a class="navbar-brand" href="#">Shared Ride Platform</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
@@ -22,7 +53,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/joined_rides">My Rides</a>
                 </li>
-                <li class="nav-item"></li>
+                <li class="nav-item">
                     <a class="nav-link" href="/search_rides">Find Rides</a>
                 </li>
             </ul>
@@ -59,10 +90,11 @@
         <div class="container">
             <p>&copy; {{ current_year }} TravelSathi | All Rights Reserved.</p>
             <p>
-                <a href="{{ url_for('about') }}">About Us</a> |
-                <a href="{{ url_for('contact') }}">Contact Us</a>
+                <a href="{{ url_for('about') }}" style="color: white;">About Us</a> |
+                <a href="{{ url_for('contact') }}" style="color: white;">Contact Us</a>
             </p>
         </div>
     </footer>
 </body>
 </html>
+
