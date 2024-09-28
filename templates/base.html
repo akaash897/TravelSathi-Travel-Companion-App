@@ -1,44 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
         body {
             font-family: 'Fredoka', cursive;
             background-color: #f4f4f4;
-            text-align: center; /* Centering all text */
-            min-height: 100vh; /* Full viewport height */
+            text-align: center;
+            /* Centering all text */
+            min-height: 100vh;
+            /* Full viewport height */
             display: flex;
-            flex-direction: column; /* Enable flexbox */
+            flex-direction: column;
+            /* Enable flexbox */
         }
+
         .navbar {
-            background-color: #343a40; /* Darker navbar */
-            border-radius: 10px; /* Rounded edges */
-            padding: 10px 20px; /* Space around the navbar */
+            background-color: #343a40;
+            /* Darker navbar */
+            border-radius: 10px;
+            /* Rounded edges */
+            padding: 10px 20px;
+            /* Space around the navbar */
             margin-bottom: 20px;
             margin-top: 20px;
             margin-left: 5px;
-            margin-right: 5px; /* Space below the navbar */
+            margin-right: 5px;
+            /* Space below the navbar */
         }
-        .navbar-brand, .nav-link {
-            color: white !important; /* White text for navbar links */
+
+        .navbar-brand,
+        .nav-link {
+            color: white !important;
+            /* White text for navbar links */
         }
+
         .navbar-nav .nav-link:hover {
-            color: #f8f9fa !important; /* Slightly lighter on hover */
+            color: #f8f9fa !important;
+            /* Slightly lighter on hover */
         }
+
         .footer {
-            background-color: #343a40; /* Same dark color for footer */
-            color: white; /* White text in footer */
+            background-color: #343a40;
+            /* Same dark color for footer */
+            color: white;
+            /* White text in footer */
             padding: 10px 0;
-            margin-top: auto; /* Pushes the footer to the bottom */
+            margin-top: auto;
+            /* Pushes the footer to the bottom */
         }
     </style>
     {% block head %}{% endblock %}
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <a class="navbar-brand" href="#">Shared Ride Platform</a>
@@ -59,23 +80,24 @@
             </ul>
             <ul class="navbar-nav ml-auto">
                 {% if current_user.is_authenticated %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user-circle"></i> <!-- User Icon -->
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
-                            <h6 class="dropdown-header">{{ current_user.email }}</h6>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
-                        </div>
-                    </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user-circle"></i> <!-- User Icon -->
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
+                        <h6 class="dropdown-header">{{ current_user.email }}</h6>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
+                    </div>
+                </li>
                 {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('register') }}">Register</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+                </li>
                 {% endif %}
             </ul>
         </div>
@@ -84,8 +106,6 @@
     <!-- Bootstrap JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <footer class="footer">
         <div class="container">
             <p>&copy; {{ current_year }} TravelSathi | All Rights Reserved.</p>
@@ -96,5 +116,5 @@
         </div>
     </footer>
 </body>
-</html>
 
+</html>

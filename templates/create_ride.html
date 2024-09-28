@@ -1,64 +1,46 @@
 <!-- templates/create_ride.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Ride</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <div class="container">
-        <h1>Create a New Ride</h1>
-        <form method="POST">
-            {{ form.hidden_tag() }}
-            
-            <label for="start_location">{{ form.start_location.label }}</label>
-            {{ form.start_location(class="form-control") }}
-            {% if form.start_location.errors %}
-                <span class="text-danger">{{ form.start_location.errors[0] }}</span>
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Create a Ride</title>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-3">
+    <h1 class="text-center">Create a New Ride</h1>
+    
+    <form method="POST" class="row g-3">
+        {{ form.hidden_tag() }}
+
+        {% for field in [form.start_location, form.end_location] %}
+        <div class="col-md-6 mb-1">
+            <label for="{{ field.id }}" class="form-label mb-1">{{ field.label }}</label>
+            {{ field(class="form-control form-control-sm") }}
+            {% if field.errors %}
+            <small class="text-danger">{{ field.errors[0] }}</small>
             {% endif %}
+        </div>
+        {% endfor %}
 
-            <label for="end_location">{{ form.end_location.label }}</label>
-            {{ form.end_location(class="form-control") }}
-            {% if form.end_location.errors %}
-                <span class="text-danger">{{ form.end_location.errors[0] }}</span>
+        {% for field in [form.meetup_point, form.departure_time, form.available_seats, form.cost_per_head] %}
+        <div class="col-md-6 mb-1">
+            <label for="{{ field.id }}" class="form-label mb-1">{{ field.label }}</label>
+            {{ field(class="form-control form-control-sm") }}
+            {% if field.errors %}
+            <small class="text-danger">{{ field.errors[0] }}</small>
             {% endif %}
+        </div>
+        {% endfor %}
 
-            <label for="meetup_point">{{ form.meetup_point.label }}</label>
-            {{ form.meetup_point(class="form-control") }}
-            {% if form.meetup_point.errors %}
-                <span class="text-danger">{{ form.meetup_point.errors[0] }}</span>
-            {% endif %}
+        <div class="col-md-6">
+            <label for="{{ form.gender_preference.id }}" class="form-label mb-1">{{ form.gender_preference.label }}</label>
+            {{ form.gender_preference(class="form-control form-control-sm") }}
+        </div>
 
-            <label for="departure_time">{{ form.departure_time.label }}</label>
-            {{ form.departure_time(class="form-control") }}
-            {% if form.departure_time.errors %}
-                <span class="text-danger">{{ form.departure_time.errors[0] }}</span>
-            {% endif %}
-
-            <label for="available_seats">{{ form.available_seats.label }}</label>
-            {{ form.available_seats(class="form-control") }}
-            {% if form.available_seats.errors %}
-                <span class="text-danger">{{ form.available_seats.errors[0] }}</span>
-            {% endif %}
-
-            <label for="cost_per_head">{{ form.cost_per_head.label }}</label>
-            {{ form.cost_per_head(class="form-control") }}
-            {% if form.cost_per_head.errors %}
-                <span class="text-danger">{{ form.cost_per_head.errors[0] }}</span>
-            {% endif %}
-
-            <label for="gender_preference">{{ form.gender_preference.label }}</label>
-            {{ form.gender_preference(class="form-control") }}
-
-            <div>
-                {{ form.submit(class="btn btn-primary") }}
-            </div>
-        </form>
-        <a href="{{ url_for('home') }}">Back to Home</a>
-    </div>
-    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
-</body>
-</html>
-
+        <div class="col-12 text-center mt-3">
+            {{ form.submit(class="btn btn-primary btn-sm px-4 me-2") }}
+            <a href="{{ url_for('home') }}" class="btn btn-secondary btn-sm px-3">Back to Home</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

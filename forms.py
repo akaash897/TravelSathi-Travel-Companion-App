@@ -17,8 +17,15 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
 
+from wtforms.validators import NumberRange
+
+from wtforms import ValidationError
+
+from wtforms import ValidationError, FloatField, IntegerField, SelectField, StringField, SubmitField
+from wtforms.validators import DataRequired
+from flask_wtf import FlaskForm
+
 class RideForm(FlaskForm):
-    # Dropdown options for start and end location
     location_choices = [
         ('iit_jodhpur', 'IIT Jodhpur'),
         ('jodhpur_junction', 'Jodhpur Junction'),
@@ -36,7 +43,23 @@ class RideForm(FlaskForm):
     gender_preference = SelectField('Gender Preference', choices=[('male', 'Male Only'), ('female', 'Female Only'), ('co-ed', 'Co-ed')])
     submit = SubmitField('Post Ride')
 
+    # Custom validation for start and end location
+    def validate_end_location(self, end_location):
+        if self.start_location.data == end_location.data:
+            raise ValidationError('End location must be different from start location.')
+
+    # Custom validation for available seats
     def validate_available_seats(self, available_seats):
         if available_seats.data <= 1:
             raise ValidationError('Available seats must be greater than 1.')
+
+    # Custom validation for cost per head
+    def validate_cost_per_head(self, cost_per_head):
+        if cost_per_head.data is not None and cost_per_head.data <= 0.0:
+            raise ValidationError('Cost per head must be greater than 0.')
+
+
+
+
+
 
