@@ -6,6 +6,7 @@ from forms import RegistrationForm, LoginForm, RideForm
 from flask_login import login_user, current_user, logout_user, login_required, LoginManager
 from functools import wraps
 from urllib.parse import urlparse, urljoin
+from datetime import datetime
 
 # Initialize LoginManager
 login_manager = LoginManager()
@@ -191,3 +192,7 @@ def search_rides():
         rides = Ride.query.filter((Ride.gender_preference == 'female') | (Ride.gender_preference == 'co-ed')).all()
     
     return render_template('search_rides.html', rides=rides)
+
+@app.context_processor
+def inject_now():
+    return {'current_year': datetime.utcnow().year}
