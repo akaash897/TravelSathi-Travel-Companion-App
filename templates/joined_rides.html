@@ -1,51 +1,67 @@
+<!-- templates/joined_rides.html -->
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Your Rides</title>
+<title>Your Joined Rides</title>
+<!-- Include Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 {% endblock %}
 
 {% block body %}
 <div class="container mt-4">
-    <h2>Your Upcoming Rides</h2>
+    <h2>Your Joined Rides</h2>
 
-    <!-- Display flash messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-            <ul class="flashes">
+        <div class="flash-messages">
             {% for category, message in messages %}
-                <li class="{{ category }}">{{ message }}</li>
+            <div class="alert alert-{{ category }}">{{ message }}</div>
             {% endfor %}
-            </ul>
+        </div>
         {% endif %}
     {% endwith %}
 
-    <!-- Display joined rides -->
-    {% if joined_rides and joined_rides|length > 0 %}
-        <div class="list-group">
-            {% for ride in joined_rides %}
-                <div class="list-group-item">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">{{ ride.start_location }} to {{ ride.end_location }}</h5>
-                        <small>Departure: {{ ride.departure_time }}</small>
-                    </div>
-                    <p class="mb-1">Meetup at: {{ ride.meetup_point }}</p>
-                    <small>Cost per head: ₹{{ ride.cost_per_head }}</small>
-                    
-                    <div class="mt-2">
+    {% if joined_rides %}
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Start Location</th>
+                    <th>End Location</th>
+                    <th>Departure Time</th>
+                    <th>Available Seats</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ride in joined_rides %}
+                <tr>
+                    <td>{{ ride.start_location }}</td>
+                    <td>{{ ride.end_location }}</td>
+                    <td>{{ ride.departure_time }}</td>
+                    <td>{{ ride.available_seats }}</td>
+                    <td>
+                        <!-- Opt-out button -->
                         <form action="{{ url_for('opt_out', ride_id=ride.id) }}" method="POST" style="display:inline;">
-                            <button type="submit" class="btn btn-warning btn-sm">Opt Out</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Opt Out</button>
                         </form>
-                        {% if ride.author_id == current_user.id %}
+                        <!-- Delete button -->
                         <form action="{{ url_for('delete_ride', ride_id=ride.id) }}" method="POST" style="display:inline;">
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Delete Ride</button>
                         </form>
-                        {% endif %}
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     {% else %}
-        <p class="text-muted">You have not joined any upcoming rides.</p>
+        <div class="alert alert-info">You have not joined any rides.</div>
     {% endif %}
 </div>
+
+<!-- Include Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 {% endblock %}
+
+

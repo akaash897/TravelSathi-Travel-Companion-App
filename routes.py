@@ -38,11 +38,10 @@ def home():
             rides = Ride.query.filter((Ride.gender_preference == 'male') | (Ride.gender_preference == 'co-ed')).all()
         elif current_user.gender == 'female':
             rides = Ride.query.filter((Ride.gender_preference == 'female') | (Ride.gender_preference == 'co-ed')).all()
+        return render_template('index.html', rides=rides)
     else:
-        # If the user is not authenticated, only show co-ed rides (for guests)
-        rides = Ride.query.filter_by(gender_preference='co-ed').all()
-
-    return render_template('index.html', rides=rides)
+        # If not authenticated, only show login and signup buttons
+        return render_template('index.html', rides=[])
 
 # User Registration
 @app.route('/register', methods=['GET', 'POST'])
@@ -92,7 +91,13 @@ def new_ride():
                     gender_preference=form.gender_preference.data, author=current_user)
         db.session.add(ride)
         db.session.commit()
-        flash('Your ride has been posted!', 'success')
+        
+        # Automatically add the user to their created ride
+        ride.passengers.append(current_user)
+        ride.available_seats -= 1
+        db.session.commit()
+        
+        flash('Your ride has been posted and you have been added!', 'success')
         return redirect(url_for('home'))
     return render_template('create_ride.html', form=form)
 
@@ -124,18 +129,17 @@ def join_ride(ride_id):
         flash('No seats available for this ride.', 'danger')
 
     return redirect(url_for('home'))
-
 @app.route('/joined_rides')
 @login_required
 def joined_rides():
     # Fetch rides that the user has joined
     joined_rides = current_user.rides_joined
+    created_rides = current_user.ride_posts
     
-    # Debugging: print joined rides to console
-    for ride in joined_rides:
-        print(f"Joined Ride: {ride.start_location} -> {ride.end_location} at {ride.departure_time}")
+    if not joined_rides and not created_rides:
+        return render_template('joined_rides.html', joined_rides=[], created_rides=[], show_buttons=True)
 
-    return render_template('joined_rides.html', joined_rides=joined_rides)
+    return render_template('joined_rides.html', joined_rides=joined_rides, created_rides=created_rides, show_buttons=False)
 
 # routes.py
 @app.route('/logout')
@@ -170,6 +174,7 @@ def opt_out(ride_id):
     ride = Ride.query.get_or_404(ride_id)
     if ride in current_user.rides_joined:
         current_user.rides_joined.remove(ride)
+        ride.available_seats += 1  # Increase seat count
         db.session.commit()
         flash('You have opted out of the ride.', 'success')
     else:

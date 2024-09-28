@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block body %}
-
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
 <div class="flash-messages">
@@ -18,42 +17,47 @@
 </div>
 {% endif %}
 {% endwith %}
+
 <div class="container">
     <h2>Welcome to TravelSathi - A platform by and for IIT Jodhpurians</h2>
 
     {% if current_user.is_authenticated %}
-    <a href="{{ url_for('new_ride') }}" class="btn">Post a Ride</a>
-    <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+        <a href="{{ url_for('new_ride') }}" class="btn">Post a Ride</a>
+        <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+
+        <h2>Available Rides</h2>
+
+        <table>
+            <tr>
+                <th>Start Location</th>
+                <th>End Location</th>
+                <th>Departure Time</th>
+                <th>Seats Available</th>
+                <th>Cost per Head</th>
+                <th>Gender Preference</th>
+                <th>Action</th>
+            </tr>
+            {% for ride in rides %}
+            <tr>
+                <td>{{ ride.start_location }}</td>
+                <td>{{ ride.end_location }}</td>
+                <td>{{ ride.departure_time }}</td>
+                <td>{{ ride.available_seats }}</td>
+                <td>{{ ride.cost_per_head }}</td>
+                <td>{{ ride.gender_preference|capitalize }}</td>
+                <td>
+                    {% if ride.available_seats > 0 %}
+                        <a href="{{ url_for('join_ride', ride_id=ride.id) }}">Join Ride</a>
+                    {% else %}
+                        <span>Ride is full</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
     {% else %}
-    <a href="{{ url_for('login') }}" class="btn">Login</a>
-    <a href="{{ url_for('register') }}" class="btn">Register</a>
+        <a href="{{ url_for('login') }}" class="btn">Login</a>
+        <a href="{{ url_for('register') }}" class="btn">Register</a>
     {% endif %}
-
-    <h2>Available Rides</h2>
-
-    <table>
-        <tr>
-            <th>Start Location</th>
-            <th>End Location</th>
-            <th>Departure Time</th>
-            <th>Seats Available</th>
-            <th>Cost per Head</th>
-            <th>Gender Preference</th> <!-- Add this column -->
-            <th>Action</th>
-        </tr>
-        {% for ride in rides %}
-        <tr>
-            <td>{{ ride.start_location }}</td>
-            <td>{{ ride.end_location }}</td>
-            <td>{{ ride.departure_time }}</td>
-            <td>{{ ride.available_seats }}</td>
-            <td>{{ ride.cost_per_head }}</td>
-            <td>{{ ride.gender_preference|capitalize }}</td> <!-- Display the gender preference -->
-            <td><a href="{{ url_for('join_ride', ride_id=ride.id) }}">Join Ride</a></td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <!-- Link to JavaScript -->
-    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
-    {% endblock %}
+</div>
+{% endblock %}
