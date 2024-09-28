@@ -26,3 +26,7 @@ class RideForm(FlaskForm):
     cost_per_head = FloatField('Cost per Head', validators=[DataRequired()])
     gender_preference = SelectField('Gender Preference', choices=[('male', 'Male Only'), ('female', 'Female Only'), ('co-ed', 'Co-ed')])
     submit = SubmitField('Post Ride')
+
+    def validate_available_seats(self, available_seats):
+        if available_seats.data <= 1:
+            raise ValidationError('Available seats must be greater than 1.')
