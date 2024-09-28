@@ -10,30 +10,50 @@
 {% if messages %}
 <div class="flash-messages">
     {% for category, message in messages %}
-    <div class="alert alert-{{ category }}">
+    <div class="alert alert-{{ category }} mt-2">
         {{ message }}
     </div>
     {% endfor %}
 </div>
 {% endif %}
 {% endwith %}
-<div class="container">
-    <h1>Register</h1>
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        <label for="name">{{ form.name.label }}</label>
-        {{ form.name() }}
-        <label for="email">{{ form.email.label }}</label>
-        {{ form.email() }}
-        <label for="password">{{ form.password.label }}</label>
-        {{ form.password() }}
-        <label for="confirm_password">{{ form.confirm_password.label }}</label>
-        {{ form.confirm_password() }}
-        <label for="gender">{{ form.gender.label }}</label>
-        {{ form.gender() }}
-        {{ form.submit() }}
-    </form>
-    <a href="{{ url_for('login') }}">Already have an account? Login</a>
+
+<div class="container h-100 d-flex justify-content-center align-items-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow p-3">
+            <h1 class="text-center mb-3">Register</h1>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <div class="mb-2">
+                    <label for="name" class="form-label">{{ form.name.label }}</label>
+                    {{ form.name(class="form-control") }}
+                </div>
+                <div class="mb-2">
+                    <label for="email" class="form-label">{{ form.email.label }}</label>
+                    {{ form.email(class="form-control") }}
+                </div>
+                <div class="mb-2">
+                    <label for="password" class="form-label">{{ form.password.label }}</label>
+                    {{ form.password(class="form-control") }}
+                </div>
+                <div class="mb-2">
+                    <label for="confirm_password" class="form-label">{{ form.confirm_password.label }}</label>
+                    {{ form.confirm_password(class="form-control") }}
+                </div>
+                <div class="mb-2">
+                    <label for="gender" class="form-label">{{ form.gender.label }}</label>
+                    {{ form.gender(class="form-select") }}
+                </div>
+                <div class="d-grid gap-2">
+                    {{ form.submit(class="btn btn-primary btn-block") }}
+                </div>
+            </form>
+            <div class="text-center mt-2">
+                <a href="{{ url_for('login') }}">Already have an account? Login</a>
+            </div>
+        </div>
+    </div>
 </div>
+
 <script src="{{ url_for('static', filename='scripts.js') }}"></script>
 {% endblock %}
