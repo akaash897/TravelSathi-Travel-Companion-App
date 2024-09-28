@@ -1,0 +1,49 @@
+<!-- templates/search_rides.html -->
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Travel Sathi - Search Rides</title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h2>Available Rides</h2>
+
+    {% if rides %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Start Location</th>
+                <th>End Location</th>
+                <th>Departure Time</th>
+                <th>Seats Available</th>
+                <th>Cost per Head</th>
+                <th>Gender Preference</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ride in rides %}
+            <tr>
+                <td>{{ ride.start_location }}</td>
+                <td>{{ ride.end_location }}</td>
+                <td>{{ ride.departure_time }}</td>
+                <td>{{ ride.available_seats }}</td>
+                <td>{{ ride.cost_per_head }}</td>
+                <td>{{ ride.gender_preference|capitalize }}</td>
+                <td>
+                    {% if ride.available_seats > 0 %}
+                        <a href="{{ url_for('join_ride', ride_id=ride.id) }}">Join Ride</a>
+                    {% else %}
+                        <span>Ride is full</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No available rides at the moment.</p>
+    {% endif %}
+</div>
+{% endblock %}

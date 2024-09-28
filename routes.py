@@ -180,3 +180,14 @@ def opt_out(ride_id):
     else:
         flash('You are not joined to this ride.', 'danger')
     return redirect(url_for('joined_rides'))
+
+@app.route('/search_rides')
+@login_required
+def search_rides():
+    # Fetch rides based on gender preference
+    if current_user.gender == 'male':
+        rides = Ride.query.filter((Ride.gender_preference == 'male') | (Ride.gender_preference == 'co-ed')).all()
+    elif current_user.gender == 'female':
+        rides = Ride.query.filter((Ride.gender_preference == 'female') | (Ride.gender_preference == 'co-ed')).all()
+    
+    return render_template('search_rides.html', rides=rides)
