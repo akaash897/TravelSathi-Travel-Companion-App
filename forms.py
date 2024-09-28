@@ -18,8 +18,17 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 class RideForm(FlaskForm):
-    start_location = StringField('Start Location', validators=[DataRequired()])
-    end_location = StringField('End Location', validators=[DataRequired()])
+    # Dropdown options for start and end location
+    location_choices = [
+        ('iit_jodhpur', 'IIT Jodhpur'),
+        ('jodhpur_junction', 'Jodhpur Junction'),
+        ('airport', 'Jodhpur Airport'),
+        ('bus_stand', 'MBM Bus Stand'),
+        ('paota', 'Paota')
+    ]
+
+    start_location = SelectField('Start Location', choices=location_choices, validators=[DataRequired()])
+    end_location = SelectField('End Location', choices=location_choices, validators=[DataRequired()])
     meetup_point = StringField('Meetup Point', validators=[DataRequired()])
     departure_time = StringField('Departure Time', validators=[DataRequired()])
     available_seats = IntegerField('Available Seats', validators=[DataRequired()])
@@ -30,3 +39,4 @@ class RideForm(FlaskForm):
     def validate_available_seats(self, available_seats):
         if available_seats.data <= 1:
             raise ValidationError('Available seats must be greater than 1.')
+

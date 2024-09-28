@@ -130,17 +130,26 @@ def join_ride(ride_id):
         flash('No seats available for this ride.', 'danger')
 
     return redirect(url_for('home'))
+location_labels = {
+    'iit_jodhpur': 'IIT Jodhpur',
+    'jodhpur_junction': 'Jodhpur Junction',
+    'airport': 'Jodhpur Airport',
+    'bus_stand': 'Bus Stand',
+    'paota': 'Paota',
+    # Add more mappings as necessary
+}
+
 @app.route('/joined_rides')
 @login_required
 def joined_rides():
-    # Fetch rides that the user has joined
+    # Fetch rides that the user has joined and created
     joined_rides = current_user.rides_joined
     created_rides = current_user.ride_posts
     
     if not joined_rides and not created_rides:
-        return render_template('joined_rides.html', joined_rides=[], created_rides=[], show_buttons=True)
+        return render_template('joined_rides.html', joined_rides=[], created_rides=[], show_buttons=True, location_labels=location_labels)
 
-    return render_template('joined_rides.html', joined_rides=joined_rides, created_rides=created_rides, show_buttons=False)
+    return render_template('joined_rides.html', joined_rides=joined_rides, created_rides=created_rides, show_buttons=False, location_labels=location_labels)
 
 # routes.py
 @app.route('/logout')
@@ -191,7 +200,7 @@ def search_rides():
     elif current_user.gender == 'female':
         rides = Ride.query.filter((Ride.gender_preference == 'female') | (Ride.gender_preference == 'co-ed')).all()
     
-    return render_template('search_rides.html', rides=rides)
+    return render_template('search_rides.html', rides=rides ,location_labels=location_labels)
 
 @app.context_processor
 def inject_now():

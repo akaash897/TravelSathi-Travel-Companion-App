@@ -14,46 +14,46 @@
             {{ form.hidden_tag() }}
             
             <label for="start_location">{{ form.start_location.label }}</label>
-            {{ form.start_location() }}
+            {{ form.start_location(class="form-control") }}
             {% if form.start_location.errors %}
                 <span class="text-danger">{{ form.start_location.errors[0] }}</span>
             {% endif %}
 
             <label for="end_location">{{ form.end_location.label }}</label>
-            {{ form.end_location() }}
+            {{ form.end_location(class="form-control") }}
             {% if form.end_location.errors %}
                 <span class="text-danger">{{ form.end_location.errors[0] }}</span>
             {% endif %}
 
             <label for="meetup_point">{{ form.meetup_point.label }}</label>
-            {{ form.meetup_point() }}
+            {{ form.meetup_point(class="form-control") }}
             {% if form.meetup_point.errors %}
                 <span class="text-danger">{{ form.meetup_point.errors[0] }}</span>
             {% endif %}
 
             <label for="departure_time">{{ form.departure_time.label }}</label>
-            {{ form.departure_time() }}
+            {{ form.departure_time(class="form-control") }}
             {% if form.departure_time.errors %}
                 <span class="text-danger">{{ form.departure_time.errors[0] }}</span>
             {% endif %}
 
             <label for="available_seats">{{ form.available_seats.label }}</label>
-            {{ form.available_seats() }}
+            {{ form.available_seats(class="form-control") }}
             {% if form.available_seats.errors %}
                 <span class="text-danger">{{ form.available_seats.errors[0] }}</span>
             {% endif %}
 
             <label for="cost_per_head">{{ form.cost_per_head.label }}</label>
-            {{ form.cost_per_head() }}
+            {{ form.cost_per_head(class="form-control") }}
             {% if form.cost_per_head.errors %}
                 <span class="text-danger">{{ form.cost_per_head.errors[0] }}</span>
             {% endif %}
 
             <label for="gender_preference">{{ form.gender_preference.label }}</label>
-            {{ form.gender_preference() }}
+            {{ form.gender_preference(class="form-control") }}
 
             <div>
-                {{ form.submit() }}
+                {{ form.submit(class="btn btn-primary") }}
             </div>
         </form>
         <a href="{{ url_for('home') }}">Back to Home</a>
@@ -61,3 +61,4 @@
     <script src="{{ url_for('static', filename='scripts.js') }}"></script>
 </body>
 </html>
+
