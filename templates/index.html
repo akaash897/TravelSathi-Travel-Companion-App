@@ -22,9 +22,6 @@
     <h2>Welcome to TravelSathi - A platform by and for IIT Jodhpurians</h2>
 
     {% if current_user.is_authenticated %}
-        <a href="{{ url_for('new_ride') }}" class="btn">Post a Ride</a>
-        <a href="{{ url_for('logout') }}" class="btn">Logout</a>
-
         <h2>Available Rides</h2>
 
         <table>
@@ -56,8 +53,7 @@
             {% endfor %}
         </table>
     {% else %}
-        <a href="{{ url_for('login') }}" class="btn">Login</a>
-        <a href="{{ url_for('register') }}" class="btn">Register</a>
+        
     {% endif %}
 </div>
 {% endblock %}
