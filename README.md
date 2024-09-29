@@ -7,7 +7,7 @@ The project aims to create a secure online platform that facilitates shared tran
 ## Evaluation rubrics
 - [ ] Pick two or more architectural pattern, implement and compare them critically.
 
-- [ ] Compare the effect of containerisation and virtualisation by generating experimental results from the system implemented by you. 
+- [x] Compare the effect of containerisation and virtualisation by generating experimental results from the system implemented by you. [more details here](benchmarks.md)
 
 - [ ] Implement any cloud computing related aspect and show the performance improvement over non-cloud setup by generating experimental results from the system implemented by you. 
 
@@ -78,10 +78,13 @@ This is a web application built using **Flask**, a lightweight WSGI web framewor
 └── README.md            # Project documentation
 ```
 
-## Features
+## Virtualization 
 
-- Feature 1: 
-- Feature 2: 
+Virtual machine based on Fedora OS was instatiated in Oracle [Virtualbox, details here](virtualbox.md)
+
+## Containerization 
+
+This was implmented using [Docker containers, more details here](docker.md)
 
 ## Contribution
 
