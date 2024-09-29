@@ -158,6 +158,7 @@ def joined_rides():
 def logout():
     logout_user()
     return redirect(url_for('home'))
+
 @app.route('/about')
 def about():
     return render_template('about.html')
@@ -165,6 +166,10 @@ def about():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
+@app.route('/drivers')
+def drivers():
+    return render_template('drivers.html')
 
 @app.route('/delete_ride/<int:ride_id>', methods=['POST'])
 @login_required

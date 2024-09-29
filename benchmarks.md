@@ -10,3 +10,6 @@
    ```bash
    ab -c 100 -n 1000 http://localhost:5000/
    ```
+
+## References 
+1. https://dev.to/gabriellaamah/load-testing-for-api-with-apache-benchmark-on-windows-58oj
