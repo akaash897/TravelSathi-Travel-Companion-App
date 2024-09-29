@@ -14,7 +14,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(150), nullable=False)
     email = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
-    gender = db.Column(db.String(10), nullable=False)  # 'male', 'female'
+    gender = db.Column(db.String(10), nullable=False)
     ride_posts = db.relationship('Ride', backref='author', lazy=True)
     rides_joined = db.relationship('Ride', secondary=ride_passengers, backref='passengers')
 
@@ -27,5 +27,5 @@ class Ride(db.Model):
     departure_time = db.Column(db.String(20), nullable=False)
     available_seats = db.Column(db.Integer, nullable=False)
     cost_per_head = db.Column(db.Float, nullable=False)
-    gender_preference = db.Column(db.String(10), nullable=False)  # 'male', 'female', 'co-ed'
+    gender_preference = db.Column(db.String(10), nullable=False) 
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # Ensure 'user.id' matches the User model
