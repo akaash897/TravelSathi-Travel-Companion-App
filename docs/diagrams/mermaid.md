@@ -68,3 +68,32 @@ sequenceDiagram
     DB-->>System: Ride info updated
     System-->>User: Update My Rides
 ```
+
+### 4) User Flow Diagram
+```mermaid
+graph TD
+    subgraph User Actions
+    Login[Login/Register]
+    MyRides[My Rides]
+    SearchRides[Search Rides]
+    CreateRide[Create Ride]
+    RideList[Ride List]
+    ManageRide[Manage Rides]
+    DriverInfo[Driver Info]
+    Logout[Logout]
+    DriverContacts[Driver Contacts]
+    end
+    
+    DriverContacts -->|View Contacts| DriverInfo
+    
+    Login -->|Authenticated| Logout
+    Login -->|Authenticated| MyRides
+    Login -->|Authenticated| SearchRides
+    Login -->|Authenticated| CreateRide
+    
+    CreateRide -->|Post Ride| MyRides
+    MyRides -->|View Rides| ManageRide[Manage Rides]
+    
+    SearchRides -->|View Ride List| RideList
+    RideList -->|Join Ride| MyRides
+```
