@@ -1,5 +1,7 @@
 
-# SDE Project - TravelSathi 
+# SDE Project -IITJ Travel Sathi - A Platform to Find Companions for Shared Rides
+
+
 
 ## Abstract
 The project aims to create a secure online platform that facilitates shared transportation for college students, starting with autorickshaw rides between key locations like IIT Jodhpur and Jodhpur Junction. Users can post when they are looking for companions for a ride, and others can search for available rides to join. To ensure privacy and safety, the platform offers gender-specific pairing options—female users can choose to travel with female partners only, and the same applies to male users, with an additional co-ed option available. No personal details are shared among users. The platform will also include a database of trusted autorickshaw drivers operating within the IITJ campus. Future plans involve expanding the service to other nearby institutions like NIFT and incorporating a broader range of transportation options. The final aim is to apply containerization using Docker and virtualisation based on a Fedora VM using
